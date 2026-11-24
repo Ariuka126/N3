@@ -301,21 +301,21 @@ N3.LINE_POOLS = {
   idle: [10, 12, 17, 18, 33, 34, 40, 8]
 };
 
-/* Milestones by total gems. kind: closet | theme | note */
+/* Milestones by total gems (about 400 are available). Early ones come quickly, later ones spread out. */
 N3.UNLOCKS = [
   { at: 3, kind: 'closet', id: 'scarf' },
-  { at: 5, kind: 'note', id: 'note1' },
-  { at: 7, kind: 'closet', id: 'glasses' },
-  { at: 9, kind: 'theme', id: 'sakura' },
-  { at: 13, kind: 'closet', id: 'sprout' },
-  { at: 16, kind: 'note', id: 'note2' },
-  { at: 19, kind: 'theme', id: 'rainy' },
-  { at: 23, kind: 'closet', id: 'bell' },
-  { at: 27, kind: 'note', id: 'note3' },
-  { at: 31, kind: 'theme', id: 'starlit' },
-  { at: 36, kind: 'closet', id: 'hat' },
-  { at: 42, kind: 'note', id: 'note4' },
-  { at: 50, kind: 'note', id: 'note5' }
+  { at: 7, kind: 'note', id: 'note1' },
+  { at: 12, kind: 'closet', id: 'glasses' },
+  { at: 20, kind: 'theme', id: 'sakura' },
+  { at: 30, kind: 'closet', id: 'sprout' },
+  { at: 45, kind: 'note', id: 'note2' },
+  { at: 65, kind: 'theme', id: 'rainy' },
+  { at: 90, kind: 'closet', id: 'bell' },
+  { at: 120, kind: 'note', id: 'note3' },
+  { at: 160, kind: 'theme', id: 'starlit' },
+  { at: 210, kind: 'closet', id: 'hat' },
+  { at: 280, kind: 'note', id: 'note4' },
+  { at: 360, kind: 'note', id: 'note5' }
 ];
 
 N3.CLOSET = {

@@ -184,10 +184,14 @@
   }
 
   /* ---------- Jar & gems ---------- */
+  // A jar holds JAR_SIZE gems; once full, a fresh jar starts and the filled count shows on the label.
+  const JAR_SIZE = 78;
+  const jarsFilled = () => (S.gems > 0 ? Math.floor((S.gems - 1) / JAR_SIZE) : 0);
+
   function renderJar(fresh = 0) {
-    $('#jar').innerHTML = N3.jarSVG(S.gems, fresh);
+    $('#jar').innerHTML = N3.jarSVG(S.gems - jarsFilled() * JAR_SIZE, fresh);
     $('#jar-count').textContent = S.gems;
-    $('#jar-count').nextSibling.textContent = S.gems === 1 ? ' gem' : ' gems';
+    $('#jar-count').nextSibling.textContent = (S.gems === 1 ? ' gem' : ' gems') + (jarsFilled() ? ` · jar ${jarsFilled() + 1}` : '');
     $('#m-count').textContent = S.gems;
     const nu = nextUnlock();
     const prev = [...N3.UNLOCKS].reverse().find(u => S.gems >= u.at);
@@ -245,6 +249,7 @@
   }
 
   function checkUnlock() {
+    if (S.gems % JAR_SIZE === 0) toast(`Jar ${S.gems / JAR_SIZE} is full! A fresh jar is waiting on the counter.`, 'unlock');
     const u = N3.UNLOCKS.find(x => x.at === S.gems);
     if (u) {
       const label = u.kind === 'closet' ? 'Closet item' : u.kind === 'theme' ? 'Theme' : 'Secret note';
@@ -338,6 +343,8 @@
   }
 
   function renderAllK() {
+    const got = N3.KANJI.filter(k => S.earned['k:' + k.id]).length;
+    $('#allk-count').textContent = `${N3.KANJI.length} (${got} in your jar)`;
     $('#allk').innerHTML = N3.KANJI.map(k => {
       const st = S.earned['k:' + k.id] ? 'got' : S.tricky.some(t => t.kind === 'kanji' && t.id === k.id) ? 'fuzzy' : '';
       return `<button class="allk-cell ${st}" data-id="${k.id}" lang="ja" title="${esc(k.mean)}">${k.k}</button>`;
