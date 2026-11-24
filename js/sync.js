@@ -47,10 +47,25 @@ N3.Sync = (function () {
       .filter(t => !(out.graduated[key(t)] >= t.added))
       .sort((x, y) => x.added - y.added);
 
-    // Today's progress: union of steps when both sides are on the same day.
+    // Today's progress: union of steps and new kanji when both sides are on the same day.
     if (local.day && remote.day && local.day.date === remote.day.date) {
-      out.day = Object.assign({}, newer.day, { steps: [...new Set([...(local.day.steps || []), ...(remote.day.steps || [])])] });
+      const union = f => [...new Set([...(local.day[f] || []), ...(remote.day[f] || [])])];
+      out.day = Object.assign({}, newer.day, { steps: union('steps'), newDone: union('newDone') });
     }
+
+    // Review records: per card, keep the one with more answers behind it (ties: the more recent).
+    out.srs = Object.assign({}, remote.srs);
+    Object.entries(local.srs || {}).forEach(([k, a]) => {
+      const b = out.srs[k];
+      if (!b || a.seen > b.seen || (a.seen === b.seen && (a.last || 0) >= (b.last || 0))) out.srs[k] = a;
+    });
+    // Study log: per day and field, the larger count (each device logs its own activity, max avoids double counting).
+    out.log = Object.assign({}, remote.log);
+    Object.entries(local.log || {}).forEach(([d, a]) => {
+      const b = out.log[d] || {};
+      out.log[d] = { n: Math.max(a.n || 0, b.n || 0), right: Math.max(a.right || 0, b.right || 0), focus: Math.max(a.focus || 0, b.focus || 0) };
+    });
+    out.srsMigrated = !!(local.srsMigrated || remote.srsMigrated);
 
     // Device-specific bits stay with this device.
     out.settings = Object.assign({}, newer.settings, {
@@ -176,7 +191,9 @@ N3.Sync = (function () {
   /* ---------- Start ---------- */
 
   function init() {
-    $('#tg-cloud').addEventListener('click', openPanel);
+    const btn = $('#tg-cloud');
+    if (!btn) return; // loaded outside the page (tests)
+    btn.addEventListener('click', openPanel);
     if (!window.supabase || !N3.CLOUD || !N3.CLOUD.url) { setStatus('unavailable'); return; }
     client = window.supabase.createClient(N3.CLOUD.url, N3.CLOUD.key, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit' }

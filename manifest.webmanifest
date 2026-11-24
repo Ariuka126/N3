@@ -1,0 +1,14 @@
+{
+  "name": "N3 Sanctuary",
+  "short_name": "N3",
+  "description": "A cozy pixel sanctuary for gentle, habit-based JLPT N3 study.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6e7c8",
+  "theme_color": "#f6e7c8",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

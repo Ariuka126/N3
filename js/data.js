@@ -21,7 +21,7 @@ N3.KANJI = [
     words: [['必要', 'ひつよう', 'necessary'], ['必死', 'ひっし', 'desperate; frantic']],
     ex: '{旅行|りょこう}にはパスポートが{必要|ひつよう}です。', en: 'You need a passport for the trip.' },
   { id: 'k-shaku', k: '借', on: 'シャク', kun: 'か(りる)', mean: 'borrow',
-    words: [['借金', 'しゃっきん', 'debt'], ['借用', 'しゃくよう', 'borrowing; loan']],
+    words: [['借金', 'しゃっきん', 'debt'], ['借り物', 'かりもの', 'borrowed item']],
     ex: '{図書館|としょかん}で{本|ほん}を{三冊|さんさつ}{借|か}りた。', en: 'I borrowed three books at the library.' },
   { id: 'k-hen', k: '返', on: 'ヘン', kun: 'かえ(す)', mean: 'return',
     words: [['返事', 'へんじ', 'reply'], ['返信', 'へんしん', 'reply (message)']],
@@ -85,7 +85,7 @@ N3.KANJI = [
 /* Library books. Each exercise: q (ruby ok), opts, a (answer index), why. */
 N3.BOOKS = [
   {
-    id: 'grammar', title: 'Twin Grammar Notebook', jp: '文法ふたご帳', color: '#c9705a', height: 92,
+    id: 'grammar', area: 'Grammar', title: 'Twin Grammar Notebook', jp: '文法ふたご帳', color: '#c9705a', height: 92,
     type: 'Grammar nuance contrasts', reward: '1 gem per point', inspired: 'So-Matome & Shin Kanzen Master style',
     kind: 'quiz',
     items: [
@@ -119,7 +119,7 @@ N3.BOOKS = [
     ]
   },
   {
-    id: 'context', title: 'Words in Context', jp: '文脈のことば', color: '#6f9a6b', height: 84,
+    id: 'context', area: 'Vocabulary', title: 'Words in Context', jp: '文脈のことば', color: '#6f9a6b', height: 84,
     type: 'Vocabulary & compounds in context', reward: '1 gem per word', inspired: 'Tango & Tanki Master style',
     kind: 'quiz',
     items: [
@@ -147,7 +147,7 @@ N3.BOOKS = [
     ]
   },
   {
-    id: 'kanjiwords', title: 'Kanji in Real Words', jp: '漢字のことば', color: '#d4a64a', height: 78,
+    id: 'kanjiwords', area: 'Kanji', title: 'Kanji in Real Words', jp: '漢字のことば', color: '#d4a64a', height: 78,
     type: 'Compound reading practice', reward: '1 gem per reading', inspired: 'Shin Kanzen Master Kanji style',
     kind: 'quiz',
     items: [
@@ -166,7 +166,7 @@ N3.BOOKS = [
     ]
   },
   {
-    id: 'reading', title: 'Short Reading Window', jp: '読解のまど', color: '#5c86a8', height: 96,
+    id: 'reading', area: 'Reading', title: 'Short Reading Window', jp: '読解のまど', color: '#5c86a8', height: 96,
     type: 'Short passages + clue hints', reward: '1 gem per passage', inspired: 'TRY! & Shin Kanzen Master Dokkai style',
     kind: 'reading',
     items: [
@@ -197,7 +197,7 @@ N3.BOOKS = [
     ]
   },
   {
-    id: 'connect', title: 'Little Connectors', jp: 'つなぐことば', color: '#9a7bb0', height: 74,
+    id: 'connect', area: 'Grammar', title: 'Little Connectors', jp: 'つなぐことば', color: '#9a7bb0', height: 74,
     type: 'Conjunctions & flow clues', reward: '1 gem per link', inspired: 'Tobira & Quartet style',
     kind: 'quiz',
     items: [

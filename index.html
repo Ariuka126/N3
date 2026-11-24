@@ -6,10 +6,13 @@
   <title>N3 Sanctuary</title>
   <meta name="description" content="A cozy pixel sanctuary for gentle, habit-based JLPT N3 study.">
   <meta name="theme-color" content="#f6e7c8">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=5">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body data-theme="meadow" data-mtab="desk">
   <a class="skip" href="#workspace">Skip to study desk</a>
@@ -99,6 +102,7 @@
         <button role="tab" class="tab" data-tab="desk" aria-selected="true"><span class="tab-ico" aria-hidden="true">✎</span>Desk</button>
         <button role="tab" class="tab" data-tab="library" aria-selected="false"><span class="tab-ico" aria-hidden="true">▥</span>Library</button>
         <button role="tab" class="tab" data-tab="tricky" aria-selected="false"><span class="tab-ico" aria-hidden="true">✧</span>Tricky <span class="badge" id="tricky-badge" hidden>0</span></button>
+        <button role="tab" class="tab" data-tab="progress" aria-selected="false"><span class="tab-ico" aria-hidden="true">▤</span>Progress</button>
         <button role="tab" class="tab" data-tab="keep" aria-selected="false"><span class="tab-ico" aria-hidden="true">❀</span>Keepsakes</button>
       </nav>
 
@@ -107,15 +111,15 @@
 
         <div class="card kanji-area">
           <div class="area-head">
-            <h2>Daily Kanji</h2>
+            <h2>Today’s session</h2>
             <div class="area-tools">
-              <div class="kdots" id="kdots" role="tablist" aria-label="Today’s kanji"></div>
+              <span class="session-count" id="session-count" aria-live="polite"></span>
               <label class="switch"><input type="checkbox" id="furi-toggle" checked> <span>Furigana</span></label>
             </div>
           </div>
-          <div class="kanji-grid">
-            <article class="kcard" id="kcard"></article>
-            <div class="pad">
+          <div class="kanji-grid" id="kanji-grid">
+            <article class="kcard" id="kcard" aria-live="polite"></article>
+            <div class="pad" id="pad-wrap">
               <div class="pad-frame">
                 <span class="pad-guide" id="pad-guide" aria-hidden="true"></span>
                 <canvas id="pad" aria-label="Drawing scratchpad"></canvas>
@@ -123,10 +127,6 @@
               <div class="pad-tools">
                 <button class="btn ghost" id="pad-clear">Clear</button>
                 <label class="switch"><input type="checkbox" id="guide-toggle" checked> <span>Trace guide</span></label>
-              </div>
-              <div class="pad-actions">
-                <button class="btn primary" id="k-got">Got it ✦</button>
-                <button class="btn soft" id="k-fuzzy">Still fuzzy</button>
               </div>
             </div>
           </div>
@@ -151,9 +151,17 @@
       <div class="panel" data-panel="tricky" hidden>
         <div class="card">
           <div class="area-head"><h2>Tricky Shelf</h2></div>
-          <p class="muted">Fuzzy things rest here with no penalty. Review them whenever you like, and graduate them once they feel comfortable.</p>
+          <p class="muted">Anything you missed rests here with no penalty. Answer it correctly to graduate it. Missed items also come back automatically in your daily session.</p>
           <ul class="tricky-list" id="tricky-list"></ul>
         </div>
+      </div>
+
+      <div class="panel" data-panel="progress" hidden>
+        <div class="card" id="pg-exam"></div>
+        <div class="card" id="pg-calendar"></div>
+        <div class="card" id="pg-memory"></div>
+        <div class="card" id="pg-areas"></div>
+        <div class="card" id="pg-settings"></div>
       </div>
 
       <div class="panel" data-panel="keep" hidden>
@@ -194,13 +202,16 @@
   <div class="toasts" id="toasts" aria-live="polite"></div>
   <div class="fly-layer" id="fly-layer" aria-hidden="true"></div>
 
-  <script src="js/data.js?v=4"></script>
-  <script src="js/kanji-n3.js?v=4"></script>
-  <script src="js/sprites.js?v=4"></script>
-  <script src="js/audio.js?v=4"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/data.js"></script>
+  <script src="js/kanji-n3.js"></script>
+  <script src="js/books-more.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/srs.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/progress.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.min.js"></script>
-  <script src="js/config.js?v=4"></script>
-  <script src="js/sync.js?v=4"></script>
+  <script src="js/config.js"></script>
+  <script src="js/sync.js"></script>
 </body>
 </html>
