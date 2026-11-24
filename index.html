@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>N3 Sanctuary</title>
+  <meta name="description" content="A cozy pixel sanctuary for gentle, habit-based JLPT N3 study.">
+  <meta name="theme-color" content="#f6e7c8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-theme="meadow" data-mtab="desk">
+  <a class="skip" href="#workspace">Skip to study desk</a>
+
+  <header class="topbar">
+    <h1 class="brand"><span class="brand-mark" aria-hidden="true">✦</span> N3 Sanctuary</h1>
+    <div class="toggles" role="group" aria-label="Comfort settings">
+      <button class="toggle" id="tg-motion" aria-pressed="false" title="Reduced motion">
+        <span class="tg-ico" aria-hidden="true">◐</span><span class="tg-label">Reduced motion</span></button>
+      <button class="toggle" id="tg-sound" aria-pressed="false" title="Quiet synth ambience">
+        <span class="tg-ico" aria-hidden="true">♪</span><span class="tg-label">Quiet synth</span></button>
+      <button class="toggle" id="tg-energy" aria-pressed="false" title="Low-battery mode">
+        <span class="tg-ico" aria-hidden="true">▢</span><span class="tg-label">Low battery</span></button>
+    </div>
+  </header>
+
+  <!-- Mobile-only compact status bar -->
+  <div class="mstatus" aria-label="Status">
+    <button class="m-jar" id="m-jar" aria-label="Kanji jar">
+      <span class="m-gem" aria-hidden="true"></span>
+      <span class="m-count" id="m-count">0</span>
+      <span class="m-meter" aria-hidden="true"><span id="m-meter-fill"></span></span>
+    </button>
+    <button class="m-pomo pill" id="m-pomo" aria-label="Pomodoro">
+      <span class="pill-dot" aria-hidden="true"></span><span id="m-pomo-text">25:00</span>
+    </button>
+    <button class="m-cat" id="m-cat" aria-label="Pet the cat"></button>
+    <div class="m-bubble" id="m-bubble" role="status" aria-live="polite" hidden></div>
+  </div>
+
+  <main class="layout">
+    <!-- Sanctuary stage -->
+    <section class="stage" id="stage" aria-label="Sanctuary">
+      <div class="scene" id="scene">
+        <div class="sky"></div>
+        <div class="sun"></div>
+        <div class="clouds" id="clouds"></div>
+        <div class="hills hills-far"></div>
+        <div class="hills hills-near"></div>
+        <div class="bakery-wrap" id="bakery"></div>
+        <div class="tree-wrap" id="tree"></div>
+        <div class="lanterns" id="lanterns"></div>
+        <div class="particles" id="particles"></div>
+        <div class="ground"></div>
+        <div class="counter">
+          <div class="lamp" id="lamp"></div>
+          <button class="cat" id="cat" aria-label="Tutor cat — tap to pet"></button>
+          <div class="jar-wrap">
+            <button class="jar" id="jar" aria-label="Kanji jar"></button>
+            <div class="jar-label"><b id="jar-count">0</b> gems<span id="jar-next"></span></div>
+          </div>
+        </div>
+        <div class="bubble" id="bubble" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="pomo card" id="pomo">
+        <div class="pomo-head">
+          <span class="pomo-phase" id="pomo-phase">Ready</span>
+          <span class="pomo-sessions" id="pomo-sessions"></span>
+        </div>
+        <div class="pomo-time" id="pomo-time" aria-live="off">25:00</div>
+        <div class="pomo-bar" aria-hidden="true"><span id="pomo-bar"></span></div>
+        <div class="pomo-ctrl">
+          <button class="btn primary" id="pomo-start">Start focus</button>
+          <button class="btn" id="pomo-reset">Reset</button>
+          <button class="btn ghost" id="pomo-skip">Skip</button>
+        </div>
+        <div class="pomo-set">
+          <label>Focus
+            <span class="stepper"><button data-step="focus,-5" aria-label="Less focus time">−</button>
+            <output id="set-focus">25</output><button data-step="focus,5" aria-label="More focus time">+</button></span> min</label>
+          <label>Break
+            <span class="stepper"><button data-step="brk,-1" aria-label="Less break time">−</button>
+            <output id="set-brk">5</output><button data-step="brk,1" aria-label="More break time">+</button></span> min</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study workspace -->
+    <section class="workspace" id="workspace" aria-label="Study workspace">
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button role="tab" class="tab m-only" data-tab="nook" aria-selected="false"><span class="tab-ico" aria-hidden="true">⌂</span>Nook</button>
+        <button role="tab" class="tab" data-tab="desk" aria-selected="true"><span class="tab-ico" aria-hidden="true">✎</span>Desk</button>
+        <button role="tab" class="tab" data-tab="library" aria-selected="false"><span class="tab-ico" aria-hidden="true">▥</span>Library</button>
+        <button role="tab" class="tab" data-tab="tricky" aria-selected="false"><span class="tab-ico" aria-hidden="true">✧</span>Tricky <span class="badge" id="tricky-badge" hidden>0</span></button>
+        <button role="tab" class="tab" data-tab="keep" aria-selected="false"><span class="tab-ico" aria-hidden="true">❀</span>Keepsakes</button>
+      </nav>
+
+      <div class="panel" data-panel="desk">
+        <div class="card today" id="today"></div>
+
+        <div class="card kanji-area">
+          <div class="area-head">
+            <h2>Daily Kanji</h2>
+            <div class="area-tools">
+              <div class="kdots" id="kdots" role="tablist" aria-label="Today’s kanji"></div>
+              <label class="switch"><input type="checkbox" id="furi-toggle" checked> <span>Furigana</span></label>
+            </div>
+          </div>
+          <div class="kanji-grid">
+            <article class="kcard" id="kcard"></article>
+            <div class="pad">
+              <div class="pad-frame">
+                <span class="pad-guide" id="pad-guide" aria-hidden="true"></span>
+                <canvas id="pad" aria-label="Drawing scratchpad"></canvas>
+              </div>
+              <div class="pad-tools">
+                <button class="btn ghost" id="pad-clear">Clear</button>
+                <label class="switch"><input type="checkbox" id="guide-toggle" checked> <span>Trace guide</span></label>
+              </div>
+              <div class="pad-actions">
+                <button class="btn primary" id="k-got">Got it ✦</button>
+                <button class="btn soft" id="k-fuzzy">Still fuzzy</button>
+              </div>
+            </div>
+          </div>
+          <details class="allk">
+            <summary>Browse all kanji in this set</summary>
+            <div class="allk-grid" id="allk"></div>
+          </details>
+        </div>
+
+        <div class="card tricky-peek" id="tricky-peek"></div>
+      </div>
+
+      <div class="panel" data-panel="library" hidden>
+        <div class="card">
+          <div class="area-head"><h2>Library</h2><p class="muted small" id="shelf-hint"></p></div>
+          <div class="shelf" id="shelf"></div>
+          <div class="shelf-tag" id="shelf-tag" aria-live="polite"></div>
+        </div>
+        <div class="card"><h3>Book progress</h3><ul class="progress-list" id="book-progress"></ul></div>
+      </div>
+
+      <div class="panel" data-panel="tricky" hidden>
+        <div class="card">
+          <div class="area-head"><h2>Tricky Shelf</h2></div>
+          <p class="muted">Fuzzy things rest here with no penalty. Review them whenever you like, and graduate them once they feel comfortable.</p>
+          <ul class="tricky-list" id="tricky-list"></ul>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="keep" hidden>
+        <div class="card">
+          <h2>Cat Closet</h2>
+          <div class="closet" id="closet"></div>
+        </div>
+        <div class="card">
+          <h2>Sanctuary Themes</h2>
+          <div class="themes" id="themes"></div>
+        </div>
+        <div class="card">
+          <h2>Secret Notes</h2>
+          <div class="notes" id="notes"></div>
+        </div>
+        <div class="card">
+          <h2>Milestone path</h2>
+          <ol class="milestones" id="milestones"></ol>
+          <p class="muted small">Progress is saved in this browser only.
+            <button class="linkish" id="reset-all">Reset all progress</button></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Book / review dialog -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card book" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-head">
+        <h2 id="modal-title"></h2>
+        <button class="icon-btn" data-close aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <div class="fly-layer" id="fly-layer" aria-hidden="true"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
