@@ -19,7 +19,7 @@ Then visit http://localhost:8743.
 - **Library:** a pixel bookshelf. With a mouse, hover over a spine to peek and click to open the book. On touch screens, tap once to peek and tap again to open. The books cover grammar contrasts, vocabulary in context, compound readings, short reading passages with clue hints, connectors, and the *N3 Passing Field Guide*.
 - **Tricky Shelf:** review missed or fuzzy items and graduate them when they feel comfortable.
 - **Keepsakes:** Cat Closet cosmetics, themes and secret notes, unlocked at gem milestones.
-- **Comfort toggles:** Reduced motion, Quiet synth (an optional Web Audio ambience) and Low-battery mode.
+- **Comfort toggles:** Reduced motion, Quiet synth (an optional ambient soundscape, off by default), Sound effects (soft button taps, gem sparkle and jar clink, unlock chimes; on by default) and Low-battery mode. All sounds are synthesized with Web Audio, so there are no audio files.
 
 ## Customize
 

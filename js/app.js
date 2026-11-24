@@ -22,7 +22,7 @@
     tricky: [],
     equipped: { head: null, neck: null, face: null },
     theme: 'meadow',
-    settings: { reducedMotion: null, sound: false, lowEnergy: false, furigana: true, guide: true },
+    settings: { reducedMotion: null, sound: false, sfx: true, lowEnergy: false, furigana: true, guide: true },
     pomo: { focus: 25, brk: 5, phase: 'idle', endAt: null, remaining: null, sessions: 0, sessionsDay: '' },
     visits: { count: 0, last: '' },
     day: { date: '', picks: [], steps: [] },
@@ -76,6 +76,8 @@
     document.body.classList.toggle('low-energy', st.lowEnergy);
     $('#tg-motion').setAttribute('aria-pressed', st.reducedMotion);
     $('#tg-sound').setAttribute('aria-pressed', st.sound);
+    $('#tg-sfx').setAttribute('aria-pressed', st.sfx);
+    N3.Audio.setSfx(st.sfx);
     $('#tg-energy').setAttribute('aria-pressed', st.lowEnergy);
     $('#furi-toggle').checked = st.furigana;
     $('#guide-toggle').checked = st.guide;
@@ -85,23 +87,38 @@
   function bindToggles() {
     $('#tg-motion').addEventListener('click', () => {
       S.settings.reducedMotion = !S.settings.reducedMotion;
+      N3.Audio.toggle(S.settings.reducedMotion);
       applySettings(); buildParticles(); save();
     });
     $('#tg-sound').addEventListener('click', () => {
       S.settings.sound = !S.settings.sound;
-      N3.Audio.setEnabled(S.settings.sound);
+      N3.Audio.setAmbient(S.settings.sound);
+      N3.Audio.toggle(S.settings.sound);
       applySettings(); save();
-      if (S.settings.sound) N3.Audio.soft();
+    });
+    $('#tg-sfx').addEventListener('click', () => {
+      // Play the "off" blip before muting, and the "on" blip after unmuting.
+      if (S.settings.sfx) N3.Audio.toggle(false);
+      S.settings.sfx = !S.settings.sfx;
+      applySettings(); save();
+      if (S.settings.sfx) N3.Audio.toggle(true);
     });
     $('#tg-energy').addEventListener('click', () => {
       S.settings.lowEnergy = !S.settings.lowEnergy;
+      N3.Audio.toggle(S.settings.lowEnergy);
       applySettings(); save();
       if (S.settings.lowEnergy) speak(14); else speak('nudge');
       ui.kIdx = 0; ui.customK = null;
       renderToday(); renderKanji();
     });
-    $('#furi-toggle').addEventListener('change', e => { S.settings.furigana = e.target.checked; applySettings(); save(); });
-    $('#guide-toggle').addEventListener('change', e => { S.settings.guide = e.target.checked; applySettings(); save(); });
+    $('#furi-toggle').addEventListener('change', e => { S.settings.furigana = e.target.checked; N3.Audio.toggle(e.target.checked); applySettings(); save(); });
+    $('#guide-toggle').addEventListener('change', e => { S.settings.guide = e.target.checked; N3.Audio.toggle(e.target.checked); applySettings(); save(); });
+    // One soft tap for ordinary buttons. Toggles, the cat and answer options have their own sounds.
+    document.addEventListener('click', e => {
+      const b = e.target.closest('button');
+      if (!b || b.disabled || b.matches('.toggle, #cat, #m-cat, .opt')) return;
+      if (b.matches('.tab')) N3.Audio.tab(); else N3.Audio.tap();
+    }, true);
   }
 
   /* ---------- Cat ---------- */
@@ -194,6 +211,7 @@
     save();
     N3.Audio.gem();
     const done = () => {
+      N3.Audio.clink();
       renderJar(1);
       const j = visibleJar();
       j.classList.remove('bump'); void j.offsetWidth; j.classList.add('bump');
@@ -231,6 +249,7 @@
     if (u) {
       const label = u.kind === 'closet' ? 'Closet item' : u.kind === 'theme' ? 'Theme' : 'Secret note';
       toast(`<b>Unlocked:</b> ${label} — ${esc(unlockName(u))}`, 'unlock');
+      setTimeout(() => N3.Audio.unlock(), 350);
       renderKeep();
       setTimeout(() => speak(38), 400);
       return;
@@ -360,6 +379,7 @@
     $('#k-fuzzy').addEventListener('click', () => {
       const k = currentKanji();
       addTricky('kanji', k.id);
+      N3.Audio.soft();
       toast(`${k.k} is resting on the Tricky Shelf. No penalty.`, 'soft');
       speak('fuzzy');
       step('k:' + k.id);
@@ -636,7 +656,7 @@
       fb.innerHTML = `<p class="fb-head">${ok ? 'Yes — that’s it.' : 'Not this time, and that’s useful. It’s resting on your Tricky Shelf.'}</p>
         <p>${esc(item.why)}</p>
         <div class="modal-actions"><button class="btn primary" id="next-q">${o.nextLabel}</button></div>`;
-      if (ok) o.onCorrect(btn); else o.onWrong();
+      if (ok) o.onCorrect(btn); else { N3.Audio.gentle(); o.onWrong(); }
       $('#next-q', host).addEventListener('click', o.onNext);
       $('#next-q', host).focus({ preventScroll: true });
     });
@@ -994,7 +1014,7 @@
     $('#jar').addEventListener('click', () => speak(S.gems ? 35 : 3));
     if (S.settings.sound) {
       // Browsers need a gesture before audio can start.
-      const resume = () => { N3.Audio.setEnabled(true); removeEventListener('pointerdown', resume); };
+      const resume = () => { N3.Audio.setAmbient(true); removeEventListener('pointerdown', resume); };
       addEventListener('pointerdown', resume);
     }
     setTimeout(() => speak(firstVisit ? 1 : S.settings.lowEnergy ? 'lowEnergy' : 'returning'), 500);
