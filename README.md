@@ -21,6 +21,14 @@ Then visit http://localhost:8743.
 - **Keepsakes:** Cat Closet cosmetics, themes and secret notes, unlocked at gem milestones.
 - **Comfort toggles:** Reduced motion, Quiet synth (an optional ambient soundscape, off by default), Sound effects (soft button taps, gem sparkle and jar clink, unlock chimes; on by default) and Low-battery mode. All sounds are synthesized with Web Audio, so there are no audio files.
 
+## Cloud sync
+
+Progress always saves in the browser first. Signing in with **☁ Sync** (email magic link, no password) keeps gems, unlocks, closet, themes, notes and the Tricky Shelf in sync across browsers and devices through [Supabase](https://supabase.com). Device preferences (reduced motion, sounds) stay per device.
+
+- Settings live in `js/config.js` (Project URL + publishable key; never the secret key).
+- The `progress` table holds one JSON row per user, protected by row level security.
+- Free Supabase projects pause after about a week without use; restart from the dashboard if that happens.
+
 ## Customize
 
 - Study content, the 40 cat lines, unlock milestones and the placeholder secret notes are all in `js/data.js`. The full kanji set lives in `js/kanji-n3.js`.

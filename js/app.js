@@ -20,6 +20,7 @@
     gems: 0,
     earned: {},
     tricky: [],
+    graduated: {},
     equipped: { head: null, neck: null, face: null },
     theme: 'meadow',
     settings: { reducedMotion: null, sound: false, sfx: true, lowEnergy: false, furigana: true, guide: true },
@@ -48,9 +49,11 @@
   }
   let saveTimer = null;
   function save() {
+    S.updatedAt = Date.now();
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ }
+      if (N3.Sync) N3.Sync.schedule();
     }, 150);
   }
 
@@ -442,13 +445,18 @@
   /* ---------- Tricky shelf ---------- */
   function addTricky(kind, id) {
     if (S.tricky.some(t => t.kind === kind && t.id === id)) return;
-    S.tricky.push({ kind, id, added: Date.now() });
+    // +1 keeps "added" strictly after a graduation stamped in the same millisecond.
+    S.tricky.push({ kind, id, added: Date.now() + 1 });
     save(); renderTricky();
   }
   function removeTricky(kind, id) {
     const before = S.tricky.length;
     S.tricky = S.tricky.filter(t => !(t.kind === kind && t.id === id));
-    if (S.tricky.length !== before) { save(); renderTricky(); }
+    if (S.tricky.length !== before) {
+      // Remember when it graduated so cloud sync doesn't bring it back from another device.
+      S.graduated = Object.assign(S.graduated || {}, { [`${kind}:${id}`]: Date.now() });
+      save(); renderTricky();
+    }
   }
   function trickyLabel(t) {
     if (t.kind === 'kanji') { const k = KANJI[t.id]; return { tag: 'Kanji', jp: k.k, text: k.mean }; }
@@ -751,9 +759,13 @@
         save(); renderKeep(); closeModal();
       });
     });
-    $('#reset-all').addEventListener('click', () => {
-      if (!confirm('Reset all gems, unlocks, tricky items and settings? This cannot be undone.')) return;
-      try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+    $('#reset-all').addEventListener('click', async () => {
+      const cloud = N3.Sync && N3.Sync.signedIn();
+      if (!confirm(`Reset all gems, unlocks, tricky items and settings${cloud ? ' on every synced device' : ''}? This cannot be undone.`)) return;
+      // resetAt makes the empty state win over older copies on other devices.
+      const fresh = Object.assign(defaults(), { resetAt: Date.now(), updatedAt: Date.now() });
+      try { localStorage.setItem(KEY, JSON.stringify(fresh)); } catch (e) { /* ignore */ }
+      if (cloud) await N3.Sync.overwrite(fresh);
       location.reload();
     });
   }
@@ -990,6 +1002,24 @@
     setTimeout(() => t.classList.add('out'), 3800);
     setTimeout(() => t.remove(), 4400);
   }
+
+  /* ---------- Bridge for cloud sync ---------- */
+  N3.App = {
+    state: () => S,
+    defaults,
+    todayKey,
+    toast,
+    openModal,
+    closeModal,
+    // Swap in a merged state from the cloud and redraw everything.
+    replaceState(next) {
+      S = next;
+      try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ }
+      ensureDay();
+      applySettings(); applyTheme(); renderCat(); renderJar();
+      renderToday(); renderKanji(); renderShelf(); renderTricky(); renderKeep(); renderPomo();
+    }
+  };
 
   /* ---------- Init ---------- */
   function init() {
