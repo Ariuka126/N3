@@ -69,6 +69,18 @@ test('unlocks are ordered and point at real items', () => {
   }
 });
 
+test('secret notes are finished: no template text left, each unlock has a note', () => {
+  const ids = N3.UNLOCKS.filter(u => u.kind === 'note').map(u => u.id);
+  assert.equal(ids.length, Object.keys(N3.NOTES).length, 'every note needs an unlock and vice versa');
+  for (const id of ids) {
+    const n = N3.NOTES[id];
+    assert.ok(n && n.title && n.body, `${id}: missing title or body`);
+    if (n.placeholder) continue;
+    assert.doesNotMatch(n.body, /\[|\]|e\.g\.|________/, `${id}: still looks like a template`);
+    assert.ok(n.body.length >= 40 && n.body.length <= 400, `${id}: should be a short note (got ${n.body.length} characters)`);
+  }
+});
+
 test('the cat has all 40 lines and every pool points at one', () => {
   assert.equal(N3.LINES.length, 40);
   for (const [name, pool] of Object.entries(N3.LINE_POOLS)) {

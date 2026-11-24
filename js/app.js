@@ -834,6 +834,8 @@
     $('#notes').innerHTML = Object.entries(N3.NOTES).map(([id, n]) => {
       const u = unlockOf('note', id), open = unlocked(u);
       if (!open) return `<div class="note locked"><span class="note-seal" aria-hidden="true">✉</span><span>Sealed note · opens at ✦ ${u.at}</span></div>`;
+      // Written notes show as they are; only template notes can be replaced with your own words.
+      if (!n.placeholder) return `<div class="note"><p class="note-title">${esc(n.title)}</p><p class="note-body">${esc(n.body)}</p></div>`;
       const text = S.noteText[id] || n.body;
       return `<div class="note"><p class="note-title">${esc(n.title)}</p><p class="note-body ${S.noteText[id] ? '' : 'placeholder'}">${esc(text)}</p>
         <button class="linkish" data-note="${id}">Personalize</button></div>`;

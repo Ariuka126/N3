@@ -333,11 +333,17 @@ N3.THEMES = {
   starlit: { name: 'Starlit Lanterns' }
 };
 
-/* Placeholder notes — personalize these freely. */
+/* Secret notes, opened by gem milestones (see N3.UNLOCKS). Each note is a title and a short body.
+   A note with `placeholder: true` shows as an editable template; any other note is shown as written. */
 N3.NOTES = {
-  note1: { title: 'Note under the flour jar', body: '[Your note here] — e.g. “Remember why you started: ________.”' },
-  note2: { title: 'Note tucked in a recipe book', body: '[Your note here] — e.g. “Future me will thank you for today’s small step.”' },
-  note3: { title: 'Note by the window', body: '[Your note here] — e.g. a message from a friend, teacher, or your past self.' },
-  note4: { title: 'Note inside the teapot lid', body: '[Your note here] — e.g. “When the exam comes, breathe first, then read the question.”' },
-  note5: { title: 'Note in the lantern', body: '[Your note here] — e.g. the reward you promised yourself after N3.' }
+  note1: { title: 'Note under the flour jar',
+    body: 'First gems already! There are no deadlines here on purpose. Small steps count, even on a day when you only open this for a minute. Whenever you show up is the right time.' },
+  note2: { title: 'Note tucked in a recipe book',
+    body: 'Agricola showed me what it looks like when a team stays up late for something it cares about. N3 takes that same kind of stubborn effort.' },
+  note3: { title: 'Note by the window',
+    body: 'Magic tricks look impossible until you know the pattern, and N3 is the same. Piano too: scales before songs. And we built Agricola in a weekend, so we know what a team can do under pressure.' },
+  note4: { title: 'Note inside the teapot lid',
+    body: 'I\u2019m really glad Space Apps got our team together. Getting to know you a bit better since then has been one of the better parts of my month.' },
+  note5: { title: 'Note in the lantern',
+    body: 'You worked through every kanji. Agricola didn\u2019t need a podium to be worth it, and neither does this. The effort is real, and it\u2019s yours.' }
 };
