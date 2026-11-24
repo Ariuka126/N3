@@ -1,4 +1,4 @@
-/* Study content for the sanctuary. Ruby syntax: {漢字|かんじ} renders as furigana. */
+/* Study content for the bakery. Ruby syntax: {漢字|かんじ} renders as furigana. */
 window.N3 = window.N3 || {};
 
 N3.KANJI = [
@@ -224,7 +224,7 @@ N3.BOOKS = [
     kind: 'guide',
     pages: [
       { h: 'The shape of the exam',
-        body: 'N3 has three timed parts: Vocabulary (about 30 min), Grammar + Reading (about 70 min), and Listening (about 40 min). Scores come in three sections — Language Knowledge, Reading, and Listening — each out of 60.<br><br>To pass you need <b>95 / 180 overall</b> and at least <b>19 in each section</b>. That means no section can be skipped. This sanctuary covers kanji, vocabulary, grammar and reading; keep listening in your routine elsewhere.' },
+        body: 'N3 has three timed parts: Vocabulary (about 30 min), Grammar + Reading (about 70 min), and Listening (about 40 min). Scores come in three sections — Language Knowledge, Reading, and Listening — each out of 60.<br><br>To pass you need <b>95 / 180 overall</b> and at least <b>19 in each section</b>. That means no section can be skipped. This bakery covers kanji, vocabulary, grammar and reading; keep listening in your routine elsewhere.' },
       { h: 'Pacing without panic',
         body: 'The Grammar + Reading block is where time disappears. A soft rule: move through grammar briskly, then give reading most of the time.<br><br>If a question stalls you for more than a minute, mark a best guess and move on. There’s no penalty for guessing, so never leave a blank.' },
       { h: 'Reading clue words',

@@ -1,7 +1,8 @@
-/* N3 Sanctuary — app logic. Everything persists to localStorage under one key. */
+/* Kanji Bakery — app logic. Everything persists to localStorage under one key. */
 (function () {
   'use strict';
 
+  // Storage key keeps the app's original name so everyone's saved progress survives the rename.
   const KEY = 'n3-sanctuary-v1';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -1011,7 +1012,7 @@
     pill.classList.toggle('paused', paused);
     pill.setAttribute('aria-label', `Pomodoro ${$('#pomo-phase').textContent}, ${t}. Tap to ${p.phase === 'idle' ? 'start' : running ? 'pause' : 'resume'}.`);
     $('#pomo').dataset.phase = p.phase;
-    document.title = running ? `${t} · ${p.phase === 'focus' ? 'focus' : 'break'} — N3 Sanctuary` : 'N3 Sanctuary';
+    document.title = running ? `${t} · ${p.phase === 'focus' ? 'focus' : 'break'} — Kanji Bakery` : 'Kanji Bakery';
   }
   function toggleRun() {
     const p = P();

@@ -1,6 +1,8 @@
-# N3 Sanctuary
+# Kanji Bakery
 
-A cozy pixel-art sanctuary for gentle, habit-based JLPT N3 study. It's plain HTML, CSS and JavaScript, with no build step. Progress saves in the browser first and can sync across devices with an optional sign-in.
+A cozy pixel-art bakery for gentle, habit-based JLPT N3 study. It's plain HTML, CSS and JavaScript, with no build step. Progress saves in the browser first and can sync across devices with an optional sign-in.
+
+Live at https://kanji-bakery.vercel.app
 
 ## Run it
 
@@ -24,7 +26,7 @@ Opening `index.html` directly also works, but offline mode and installing as an 
 - **Desk:** today's session plus a browser for all 373 kanji: every kanji on the [tanos.co.uk JLPT N3 list](http://www.tanos.co.uk/jlpt/) (367) plus 6 bonus ones. Daily new kanji (default 3) and review cap are adjustable; Low-battery mode drops to 1 new kanji and 5 reviews.
 - **Library:** 12 books and 85 questions on three shelves, covering the N3 written question types: kanji reading and spelling (表記), vocabulary in context, paraphrase (言い換え), usage (用法), grammar contrasts, ★ sentence building, grammar in a passage, connectors, short and information-search reading, plus the *N3 Passing Field Guide*. Mouse: hover a spine to peek, click to open. Touch: tap to peek, tap again to open.
 - **Progress:** exam countdown with a pace check, a 12-week study calendar (no streaks), memory strength, accuracy by area, and study settings.
-- **Sanctuary:** the Tutor Cat (who also points out your weak area and waiting reviews), the Kanji Jar, a Pomodoro that reports what you answered in each focus session, four unlockable themes, closet items and secret notes.
+- **The bakery:** the Tutor Cat (who also points out your weak area and waiting reviews), the Kanji Jar, a Pomodoro that reports what you answered in each focus session, four unlockable themes, closet items and secret notes.
 - **Comfort toggles:** Reduced motion, Quiet synth (ambient, off by default), Sound effects (on by default) and Low-battery mode.
 - **Works offline and installs as an app** (service worker + manifest). App files are fetched fresh whenever you're online, so updates show up without manual cache-busting.
 

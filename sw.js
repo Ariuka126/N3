@@ -1,6 +1,6 @@
 /* Offline support. App files: network first (always fresh when online, so no manual cache-busting),
    falling back to the cache offline. Fonts and the sync library: cache first. Supabase API calls pass through. */
-const CACHE = 'n3-sanctuary-v1';
+const CACHE = 'kanji-bakery-v1';
 const CORE = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/data.js', 'js/kanji-n3.js', 'js/books-more.js', 'js/sprites.js', 'js/audio.js', 'js/srs.js',

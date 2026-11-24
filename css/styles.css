@@ -639,7 +639,7 @@ body.modal-open { overflow: hidden; }
   .tg-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .toggle { width: 40px; height: 40px; justify-content: center; padding: 0; }
   .toggles { gap: 0; flex-wrap: nowrap; }
-  .brand-long { display: none; }
+  .brand { font-size: .95rem; white-space: nowrap; }
 
   .mstatus {
     display: flex; align-items: center; gap: .5rem; position: sticky; top: 0; z-index: 20;
@@ -768,7 +768,7 @@ body.modal-open { overflow: hidden; }
   /* Six tabs share the bottom bar. */
   .tab { font-size: .68rem; }
   .tab-ico { font-size: 1.15rem; }
-  /* The sanctuary stays visible on the Desk as a short banner; the Nook tab shows it in full. */
+  /* The bakery scene stays visible on the Desk as a short banner; the Nook tab shows it in full. */
   body[data-mtab="desk"] .stage { display: grid; margin-bottom: .8rem; }
   body[data-mtab="desk"] .scene { height: 210px; }
   body[data-mtab="desk"] .pomo, body[data-mtab="desk"] .bubble, body[data-mtab="desk"] .lamp { display: none; }
@@ -777,6 +777,12 @@ body.modal-open { overflow: hidden; }
   .areas li { grid-template-columns: 84px 1fr 40px; }
   .areas li .muted { grid-column: 2 / -1; margin-top: -.4rem; }
   .quiz-word { font-size: 1.2rem; }
+}
+
+/* Very narrow phones: the name and five buttons can't share a row, so the buttons drop below it. */
+@media (max-width: 369px) {
+  .topbar { flex-wrap: wrap; row-gap: 0; }
+  .toggles { margin-left: auto; }
 }
 
 /* ============ Reduced motion ============ */

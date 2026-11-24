@@ -1,7 +1,7 @@
 {
-  "name": "n3-sanctuary",
+  "name": "kanji-bakery",
   "private": true,
-  "description": "A cozy pixel sanctuary for gentle, habit-based JLPT N3 study.",
+  "description": "A cozy pixel bakery for gentle, habit-based JLPT N3 study.",
   "scripts": {
     "test": "node --test tests/",
     "start": "python3 -m http.server 8743"
